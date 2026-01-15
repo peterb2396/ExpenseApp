@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Revlo - Revenue Flow",
-    "version": "6.0.0",
+    "version": "7.0.0",
     "extra": {
       "eas": {
         "projectId": "87a4bf12-e548-49ed-9d9f-fac23095b269"
