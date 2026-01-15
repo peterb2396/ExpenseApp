@@ -390,6 +390,7 @@ const calculateFederalTax = (taxableIncome) => {
         setIsTaxExempt(false);
         setIsPaid(false);
         setSelectedDate(new Date());
+        setShowDatePicker(false);
         if (swipeableRefs.current[swipeableKey]) {
             swipeableRefs.current[swipeableKey].close();
         }
@@ -413,6 +414,7 @@ const calculateFederalTax = (taxableIncome) => {
         setSelectedDate(new Date(transaction.date));
         setModalType('editTransaction');
         setShowModal(true);
+        setShowDatePicker(false);
     };
 
     const handleConfirm = async () => {
@@ -524,6 +526,7 @@ const calculateFederalTax = (taxableIncome) => {
             ...selectedTransaction,
             amount: Math.abs(parsedAmount) * (isNegative ? -1 : 1),
             note: note || '',
+            date: selectedDate.toISOString(),
             taxExempt: selectedTransaction.type === 'income' ? isTaxExempt : false
         };
 
@@ -744,6 +747,7 @@ const calculateFederalTax = (taxableIncome) => {
             setIsTaxExempt(false);
             setIsPaid(false);
             setSelectedDate(new Date());
+            setShowDatePicker(false);
         }, 300);
     };
 
@@ -1168,7 +1172,9 @@ const calculateFederalTax = (taxableIncome) => {
                                                             placeholder="Amount"
                                                             value={amount}
                                                             onChangeText={setAmount}
-                                                            keyboardType="decimal-pad"
+                                                            keyboardType="numeric"
+                                                            returnKeyType="done"
+                                                            onSubmitEditing={handleUpdateTransaction}
                                                             style={{ flex: 1, marginBottom: 10 }}
                                                             autoFocus
                                                         />
@@ -1253,12 +1259,12 @@ const calculateFederalTax = (taxableIncome) => {
                                                         />
                                                     )}
 
-                                                    
+
 
                                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                                         <Button
                                                             mode="outlined"
-                                                            color="red"
+                                                            textColor="red"
                                                             onPress={() => {setShowModal(false); setShowDeleteConfirm(true); setIsJob(false)}}
                                                             style={{ flex: 1, marginRight: 5 }}
                                                         >
@@ -1291,7 +1297,9 @@ const calculateFederalTax = (taxableIncome) => {
                                                             placeholder="Amount"
                                                             value={amount}
                                                             onChangeText={setAmount}
-                                                            keyboardType="decimal-pad"
+                                                            keyboardType="numeric"
+                                                            returnKeyType="done"
+                                                            onSubmitEditing={handleConfirm}
                                                             style={{ flex: 1, marginBottom: 10 }}
                                                             autoFocus
                                                         />
@@ -1373,7 +1381,7 @@ const calculateFederalTax = (taxableIncome) => {
                                                         />
                                                     )}
 
-                                                    
+
                                                     <Button
                                                         mode="contained"
                                                         onPress={handleConfirm}
